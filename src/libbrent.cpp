@@ -26,8 +26,9 @@ double brent(double (*function)(double), double a, double b, double epsi, int it
 	b=temp;
       }//end if
     double c=a;
-    double s,Fa,Fb,Fc;
+    double s,Fa,Fb,Fc,d;
     bool mf = true;
+    bool c1,c2,c3,c4,c5;
     do 
       {
 	Fa=function(a);
@@ -41,18 +42,62 @@ double brent(double (*function)(double), double a, double b, double epsi, int it
 	  {
 	    s=(b-Fb*((b-a)/(Fb-Fa)));
 	  }//end if else
+
+	//Conditions
+	if ( (s > (((3*a+b)/4) && (s < b))))
+	  {
+	    c1=true;
+	  }//end if condition 1
 	
-	if ( ( () && () ) || ( () && () ) || ( () && () ) || ( () && () ) || ( () && () ) )
-
-
-
+	if ( mf && ((std::abs (s-b)) >= ((std::abs (b-c))/2)) )
+	  {
+	    c2=true;
+	  }//end if condition 2
 	
-      }while( (function(b)==0) || (function(b)==0) || ((std::abs(b-a))<epsi) );
+	if ( !mf && ((std::abs (s-b)) >= ((std::abs (c-d))/2)) )
+	  {
+	    c3=true;
+	  }//end if condition 3
 
+	if ( mf && (std::abs (b-c)) < (std::abs (epsi)) )
+	  {
+	    c4=true;
+	  }//end if condition 4
+	  
+	if ( !mf && (std::abs (c-d)) < (std::abs (epsi)) )
+	  {
+	    c5=true;
+	  }//end if condition 5
 	
+	if ( (c1) || (c2) || (c3) || (c4) || (c5) )
+	  {
+	    s=((a+b)/2);
+	  }else
+	  {
+	    mf=false; 
+	  }//end if else
+	
+	d=c;
+	c=b;
+	
+	if (fa*function(s) < 0)
+	  {
+	    b=s;
+	  }else
+	  {
+	    a=s;
+	  }//end if else
+	
+	if ((std::abs (function(a)))<(std::abs (function(b))))
+	  {
+	    double temp =a;
+	    a=b;
+	    b=temp;
+	  }//end if
+	
+	
+      }while( (function(b)==0) || (function(s)==0) || ((std::abs(b-a))<epsi) );
   
-
-  
-  return();
+  return(s);
   
 }
