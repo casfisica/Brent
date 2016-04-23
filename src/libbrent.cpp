@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <cmath>
+#include <limits>
 
 /*
  *Brent función tiene cinco argumentos , primero la función , 
@@ -14,6 +15,7 @@
 double brent(double (*func)(double), double a, double b, double epsi, int iter, bool debug)
 {
   double tb,ta,dif;
+  double tol=0.0000000000000001;
   
   if (func(a)==0 || func(b)==0)
     {
@@ -24,7 +26,7 @@ double brent(double (*func)(double), double a, double b, double epsi, int iter, 
       if (func(a)*(func(b))> 0)
 	{
 	  std::cout << "The function does not have a single root between the poinst a and b."<< std::endl;
-	  
+	  return std::numeric_limits<double>::quiet_NaN();
 	}
       
       if ((std::abs (func(a)))<(std::abs (func(b))))
@@ -69,6 +71,8 @@ double brent(double (*func)(double), double a, double b, double epsi, int iter, 
 		  std::cout << "iter= " << cont<<" ,a=" << ta <<" ,F(a)="<< Fa<<" ,b="<< tb<<" ,F(b)="<< Fb<<" ,c="<< c<<" ,F(c)="<< Fc<<" ,condición false ,s= " << s << " dif="<< dif <<std::endl;
 		}
 	    }//end if else
+
+	  
 	  
 	  //Conditions
 	  if ( (s > (((3*ta+tb)/4) && (s < tb))))
@@ -76,8 +80,11 @@ double brent(double (*func)(double), double a, double b, double epsi, int iter, 
 	      c1=true;
 	      if (debug)
 		{
-	      std::cout << "cond1=true"<< std::endl;
+		  std::cout << "cond1=true"<< std::endl;
 		}
+	    }else
+	    {
+	      std::cout << "cond1=false"<< std::endl;
 	    }//end if condition 1
 	  
 	  if ( mf && ((std::abs (s-tb)) >= ((std::abs (tb-c))/2)) )
@@ -85,8 +92,11 @@ double brent(double (*func)(double), double a, double b, double epsi, int iter, 
 	      c2=true;
 	      if (debug)
 		{
-	      std::cout << "cond2=true"<< std::endl;
+		  std::cout << "cond2=true"<< std::endl;
 		}
+	    }else
+	    {
+	      std::cout << "cond2=false"<< std::endl;
 	    }//end if condition 2
 	  
 	  if ( !mf && ((std::abs (s-tb)) >= ((std::abs (c-d))/2)) )
@@ -94,27 +104,43 @@ double brent(double (*func)(double), double a, double b, double epsi, int iter, 
 	      c3=true;
 	      if (debug)
 		{
-	      std::cout << "cond1=true"<< std::endl;
+		  std::cout << "cond3=true"<< std::endl;
 		}
+	    }else
+	    {
+	      std::cout << "cond3=false"<< std::endl;
 	    }//end if condition 3
 	  
-	  if ( mf && (std::abs (b-c)) < (std::abs (epsi)) )
+	  if ( mf && (std::abs (b-c)) < (std::abs (tol)) )
 	    {
 	      c4=true;
 	      if (debug)
 		{
-		  std::cout << "cond5=true"<< std::endl;
+		  std::cout << "cond4=true"<< std::endl;
 		}
+	    }else
+	    {
+	      std::cout << "cond4=false"<< std::endl;
 	    }//end if condition 4
 	  
-	  if ( !mf && (std::abs (c-d)) < (std::abs (epsi)) )
+	  if ( !mf && (std::abs (c-d)) < (std::abs (tol)) )
 	    {
 	      c5=true;
 	      if (debug)
 		{
 		  std::cout << "cond5=true"<< std::endl;
 		}
+	    }else
+	    {
+	      std::cout << "cond5=false"<< std::endl;
 	    }//end if condition 5
+	  if (debug && (c1||c2||c3||c4||c5))
+	    {
+	      std::cout << "cond total=true"  <<std::endl;
+	    }else if (debug)
+	    {
+	      std::cout << "cond total=false"  <<std::endl;
+	    }//end if
 	  
 	  if ( (c1) || (c2) || (c3) || (c4) || (c5) )
 	    {

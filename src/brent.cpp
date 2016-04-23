@@ -13,15 +13,16 @@ double fun(double x){
 
 int main()
 {
-  double a0=0;
-  double b0=10;
+  double a0=-4;
+  double b0=100;
   double x;
   bool flag=true;
-  
-  std::cout << "f(a0)=" << fun(a0) << ", f(b0)=" << fun(b0) << std::endl;
-  std::cout << std::endl;
-  double raiz= brent(&fun, a0, b0, 0.0001, 100, flag);
-  std::cout << "Raiz fun=" << raiz << std::endl;
+  double raiz;
+    
+//  std::cout << "f(a0)=" << fun(a0) << ", f(b0)=" << fun(b0) << std::endl;
+//  std::cout << std::endl;
+//  raiz= brent(&fun, a0, b0, 0.0001, 100, flag);
+//  std::cout << "Raiz fun=" << raiz << std::endl;
 
 //  std::cout << std::endl;
 //  
@@ -34,8 +35,8 @@ int main()
 //  std::cout << "Raiz fun=" << raiz << std::endl;
 // 
 // 
-//  raiz= brent(&sin, -0.6, 1, 0.001, 100, flag);
-//  std::cout << "Raiz fun=" << raiz << std::endl;
+  raiz= brent(&sin, -0.6, 1, 0.001, 100, flag);
+  std::cout << "Raiz fun=" << raiz << std::endl;
 // 
 // 
 //  raiz= brent(&cos, -100, 100, 0.0001, 100, flag);
